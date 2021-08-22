@@ -177,6 +177,13 @@ _run_test:
 //-----------------------------------------------------------------------
 
 #define RVTEST_PASS                                                     \
+        li a1, 0xf0000000; /* SC_SIM_OUTPORT */                         \
+        li a0, 0x6F;                                                    \
+        sw a0, 0(a1);                                                   \
+        li a0, 0x6B;                                                    \
+        sw a0, 0(a1);                                                   \
+        li a0, 0x0A;                                                    \
+        sw a0, 0(a1);                                                   \
         fence;                                                          \
         mv a1, TESTNUM;                                                 \
         li  a0, 0x0;                                                    \
@@ -184,6 +191,17 @@ _run_test:
 
 #define TESTNUM x28
 #define RVTEST_FAIL                                                     \
+        li a1, 0xf0000000; /* SC_SIM_OUTPORT */                         \
+        li a0, 0x66;                                                    \
+        sw a0, 0(a1);                                                   \
+        li a0, 0x61;                                                    \
+        sw a0, 0(a1);                                                   \
+        li a0, 0x69;                                                    \
+        sw a0, 0(a1);                                                   \
+        li a0, 0x6C;                                                    \
+        sw a0, 0(a1);                                                   \
+        li a0, 0x0A;                                                    \
+        sw a0, 0(a1);                                                   \
         fence;                                                          \
         mv a1, TESTNUM;                                                 \
         li  a0, 0x1;                                                    \
@@ -193,8 +211,8 @@ _run_test:
 // Data Section Macro
 //-----------------------------------------------------------------------
 
-#define EXTRA_DATA
-
+#define EXTRA_DATA                                                              \
+	
 #define RVTEST_DATA_BEGIN                                                       \
         EXTRA_DATA                                                              \
         .pushsection .tohost,"aw",@progbits;                                    \
